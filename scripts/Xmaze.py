@@ -246,8 +246,8 @@ class ControlWindow(QtGui.QWidget):
         self.valueNframe = []
         self.plot.setData(x=self.valueX, y=self.valueY)
 
-        self.t_value=self.sl.value()
-        self.frame_end=self.length
+        self.t_value = self.sl.value()
+        self.frame_end = self.length
         self.roi_box()
         
     def endCapture(self):
@@ -373,8 +373,9 @@ class ControlWindow(QtGui.QWidget):
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, nframe)
             grabbed, frame = self.cap.read()
             
-            if nframe<(self.length-10):
-                self.proBar.setValue(nframe+10)
+            #if nframe < (self.length - 10):
+            if nframe < (self.frame_end - 10):
+                self.proBar.setValue(nframe + 10)
                 (h, w) = frame.shape[:2]
                 center = (w / 2, h / 2)
             
@@ -438,11 +439,13 @@ class ControlWindow(QtGui.QWidget):
                     img2 = QtGui.QImage(img, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
                     pix = QtGui.QPixmap.fromImage(img2)
                     self.video_frame.setPixmap(pix)
+                
             else:
-                self.proBar.setValue(self.length)
+                self.proBar.setValue(self.length + 10)
                 self.AnalyzeBtn()
                 self.btn_refresh.setText("Live")
                 self.plot.setData(x=self.valueX,y=self.valueY)
+                self.stop()
 
     def start(self):
         self.timer.start()
@@ -538,7 +541,7 @@ class ControlWindow(QtGui.QWidget):
         self.timer.stop()
 
     def setEnd(self):
-        self.frame_end=self.sl_frame.value()
+        self.frame_end = self.sl_frame.value()
         duration=int((self.frame_end-self.frame_start)/self.fps/60)
         frames=str(self.frame_start)+"/"+str(self.frame_end)+" ("+str(duration)+" min)"
         self.Lableframe.setText(frames)
