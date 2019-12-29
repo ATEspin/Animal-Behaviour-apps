@@ -9,7 +9,7 @@ class ControlWindow(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
         self.cap = None
-        self.filename=None
+        self.filename = None
         
         font=QtGui.QFont()
         font.setPixelSize(15)
@@ -226,7 +226,7 @@ class ControlWindow(QtGui.QWidget):
                 self.cap = cv2.VideoCapture(str(self.filename))
 
                 if not self.cap.isOpened(): 
-                    print "could not open :",self.filename
+                    print("could not open: %s" % self.filename)
                     self.getfile()
                     return
 
@@ -241,10 +241,10 @@ class ControlWindow(QtGui.QWidget):
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.nextFrameSlot)
      
-        self.valueX=[]
-        self.valueY=[]
-        self.valueNframe=[]
-        self.plot.setData(x=self.valueX,y=self.valueY)
+        self.valueX = []
+        self.valueY = []
+        self.valueNframe = []
+        self.plot.setData(x=self.valueX, y=self.valueY)
 
         self.t_value=self.sl.value()
         self.frame_end=self.length
@@ -259,8 +259,8 @@ class ControlWindow(QtGui.QWidget):
             self.endCapture()
             
         self.filename = QtGui.QFileDialog.getOpenFileName(self, 'Open file', 
-                        'c:\\',"Video files (*.mp4)")
-        self.filename.replace('/', '\\')
+                        'c:\\',"Video files (*.mp4)")[0]
+        # self.filename.replace('/', '\\')
         self.startCapture()
         self.LablePath.setText(self.filename)
         self.play_button.setEnabled(False)
@@ -282,20 +282,24 @@ class ControlWindow(QtGui.QWidget):
             self.btn_refresh.setText("No live")
             
     def adjust_gamma(self,image, gamma):
-        	invGamma = 1.0 / gamma
-        	table = np.array([((i / 255.0) ** invGamma) * 255
-        		for i in np.arange(0, 256)]).astype("uint8")
-         
-        	return cv2.LUT(image, table)
+        if gamma > 0:
+            invGamma = 1.0 / gamma
+            table = np.array([((i / 255.0) ** invGamma) * 255
+                for i in np.arange(0, 256)]).astype("uint8")
+        
+        return cv2.LUT(image, table)
             
     def selectionchange(self):
         self.cap.set(cv2.CAP_PROP_POS_FRAMES,self.sl_frame.value())
-        self.frame_start=self.sl_frame.value()
+        self.frame_start = self.sl_frame.value()
         duration=int((self.frame_end-self.frame_start)/self.fps/60)
         frames=str(self.frame_start)+"/"+str(self.frame_end)+" ("+str(duration)+" min)"
         self.Lableframe.setText(frames)
         
         ret, frame = self.cap.read()
+        if not ret:
+            print("bad frame")
+            return
         
         (h, w) = frame.shape[:2]
         center = (w / 2, h / 2)
@@ -338,7 +342,8 @@ class ControlWindow(QtGui.QWidget):
             
         t = cv2.threshold(blur,self.t_value, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(t, None, iterations=2)
-        _,cnts,_= cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+        
+        cnts, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
                                      cv2.CHAIN_APPROX_SIMPLE)         
         if cnts:
             areas = [cv2.contourArea(c) for c in cnts]
@@ -356,16 +361,16 @@ class ControlWindow(QtGui.QWidget):
         pix = QtGui.QPixmap.fromImage(img2)
         self.video_frame.setPixmap(pix)
             
-        self.valueX=[]
-        self.valueY=[]
-        self.valueNframe=[]
+        self.valueX = []
+        self.valueY = []
+        self.valueNframe = []
         self.plot.setData(x=self.valueX,y=self.valueY)
         self.t_value=self.sl.value()
         self.proBar.setValue(self.sl_frame.value())
         
     def nextFrameSlot(self):
-            nframe=self.proBar.value() 
-            self.cap.set(cv2.CAP_PROP_POS_FRAMES,nframe)
+            nframe = self.proBar.value() 
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, nframe)
             grabbed, frame = self.cap.read()
             
             if nframe<(self.length-10):
@@ -400,10 +405,10 @@ class ControlWindow(QtGui.QWidget):
                 img_fg=frame_1+frame_2+frame_3+frame_4
                 
                 mask=box_img+box_img_2+box_img_3+box_img_4
-                mask2=cv2.bitwise_not(mask)
-                img_bg=cv2.bitwise_and(frame, frame, mask=mask2)
+                mask2 = cv2.bitwise_not(mask)
+                img_bg = cv2.bitwise_and(frame, frame, mask=mask2)
                 
-                img=cv2.add(img_fg, img_bg)
+                img = cv2.add(img_fg, img_bg)
                 
                 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
                 blur = cv2.GaussianBlur(gray, (1, 1), 0)
@@ -411,7 +416,7 @@ class ControlWindow(QtGui.QWidget):
                 
                 t = cv2.threshold(blur,self.t_value, 255, cv2.THRESH_BINARY)[1]
                 thresh = cv2.dilate(t, None, iterations=2)
-                _,cnts,_= cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                cnts, _= cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
                                              cv2.CHAIN_APPROX_SIMPLE)
                 if cnts:
                     areas = [cv2.contourArea(c) for c in cnts]
@@ -425,7 +430,7 @@ class ControlWindow(QtGui.QWidget):
                     
                     self.valueX.append(cx)
                     self.valueY.append(cy)
-                    self.valueNframe.append(nframe+10)
+                    self.valueNframe.append(nframe + 10)
                             
                 
                 if (self.btn_refresh.text()=="Live"):
@@ -518,8 +523,7 @@ class ControlWindow(QtGui.QWidget):
         self.sl_frame.setEnabled(True)
         
     def AnalyzeBtn(self):
-
-        if (self.play_button.text()=="Analyze"):
+        if (self.play_button.text() == "Analyze"):
             self.stop()
             self.play_button.setText("Stop")
             self.start()
@@ -541,9 +545,9 @@ class ControlWindow(QtGui.QWidget):
         self.proBar.setMaximum(self.frame_end)
         
     def Summary(self):
-        self.distance=0
-        self.raw_time_open=0
-        self.raw_time_close=0
+        self.distance = 0
+        self.raw_time_open = 0
+        self.raw_time_close = 0
 
         roiShape = self.roi.mapToView(self.roi.shape())
         roi_2Shape = self.roi.mapToView(self.roi_2.shape())
@@ -551,19 +555,23 @@ class ControlWindow(QtGui.QWidget):
         roi_4Shape = self.roi.mapToView(self.roi_4.shape())
 
         pt=QtCore.QPointF()
-        for i,v in enumerate(self.valueNframe):
-            if i<len(self.valueNframe)-1:
+        for i, v in enumerate(self.valueNframe):
+            if i < len(self.valueNframe) - 1:
                 dist = math.sqrt((self.valueX[i+1] - self.valueX[i])**2 + (self.valueY[i+1] - self.valueY[i])**2)
                 self.distance=self.distance+dist
                 pt.setX(self.valueX[i])
                 pt.setY(self.valueY[i])
                 if roiShape.contains(pt) or roi_3Shape.contains(pt):
-                    self.raw_time_close=self.raw_time_close+10
+                    self.raw_time_close = self.raw_time_close + 10
                 if roi_2Shape.contains(pt) or roi_4Shape.contains(pt):
-                    self.raw_time_open=self.raw_time_open+10
+                    self.raw_time_open = self.raw_time_open + 10
                         
-        self.time_open=self.raw_time_open/self.fps
-        self.time_close=self.raw_time_close/self.fps
+        print(f"raw_open: {self.raw_time_open}")
+        print(f"raw_close: {self.raw_time_close}")
+        print(f"fps: {self.fps}")
+
+        self.time_open = self.raw_time_open / self.fps
+        self.time_close = self.raw_time_close / self.fps
         
     def handleSave(self):
         self.Summary()
