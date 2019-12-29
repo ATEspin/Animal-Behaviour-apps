@@ -301,6 +301,10 @@ class ControlWindow(QtGui.QWidget):
         return cv2.LUT(image, table)
             
     def selectionchange(self):
+        if self.cap is None:
+            print("Video file not loaded")
+            return
+
         self.cap.set(cv2.CAP_PROP_POS_FRAMES,self.sl_frame.value())
         self.frame_start = self.sl_frame.value()
         duration=int((self.frame_end-self.frame_start)/self.fps/60)
