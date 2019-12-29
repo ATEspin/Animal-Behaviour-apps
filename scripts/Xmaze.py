@@ -1,3 +1,14 @@
+#
+# Xmaze.py
+#
+# Tool for analyzing rat movement in an elevated plus maze experiment.
+#
+# Originally written by Abel Torres-Espin.
+# 
+# Updates for Python 3 and packaging by Callum Doolin.
+#
+
+
 import sys
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
@@ -616,8 +627,11 @@ class ControlWindow(QtGui.QWidget):
             text_file.write(str(self.distance))
             text_file.write("\n")
             
-                
-if __name__ == '__main__':
+
+def main():
     app = QtGui.QApplication(sys.argv)
     window = ControlWindow()
     sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
