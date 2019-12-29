@@ -1,8 +1,5 @@
 
-
-# distribute python
-
-PY=py -3
+PY=/usr/local/bin/python3
 
 echo 
 echo Installing Python virtualenv
@@ -18,7 +15,7 @@ echo
 sleep 1
 
 $PY -m virtualenv build/venv
-source build/venv/scripts/activate
+source build/venv/bin/activate
 
 echo
 echo Installing requirements
@@ -31,13 +28,13 @@ echo
 echo Distributing Xmaze
 echo
 sleep 1
-pyinstaller scripts/Xmaze.py --onefile
+pyinstaller scripts/Xmaze.py --windowed --onefile
 
-echo
-echo Cleaning up
-echo
-sleep 1
+# echo
+# echo Cleaning up
+# echo
+# sleep 1
 
-# rm -rf build
+# # rm -rf build
 
 echo Done

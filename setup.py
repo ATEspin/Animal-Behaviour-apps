@@ -13,7 +13,9 @@ setup(name='rat-apps',
             'pyqtgraph',
             'numpy',
             'PyQt5',
-            'opencv-python',
+            'opencv-python-headless', 
+            # headless version needed for pyinstaller to find correct
+            # dlls on OSX.
       ]
 
      )
