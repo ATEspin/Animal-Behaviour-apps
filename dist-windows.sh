@@ -2,7 +2,7 @@
 
 # distribute python
 
-PY=py -3
+PY="py -3"
 
 echo 
 echo Installing Python virtualenv
@@ -38,6 +38,6 @@ echo Cleaning up
 echo
 sleep 1
 
-# rm -rf build
+rm -rf build
 
 echo Done
