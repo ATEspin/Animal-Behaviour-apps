@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='rat-apps',
-      version = '0.1',
+      version = '0.2',
       author = 'Abel Torres-Espin, Callum Doolin',
       author_email = 'callum@resolvedinstruments.com',
 

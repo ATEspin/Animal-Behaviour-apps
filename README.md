@@ -10,11 +10,24 @@ Once Python 3 is installed, Iistall by installing package with `pip`. In a comma
 
 ### Dist on windows
 
-To create a fodler with .exe files that can be run on any Windows computer without needing to install Python, run the `dist-windows.sh` script using git bash.  ie.
+To create a folder with .exe files that can be run on any Windows computer without needing to install Python, run the `dist-windows.sh` script using git bash.  ie.
 ```bash
 bash dist-windows.sh
 ```
 or equivalently,
 ```bash
 make dist-windows
+```
+
+### Dist on OSX
+
+By default, looks for Python 3 at `/usr/local/bin/python3`, this was to use `brew` Python over Anaconda Python.  If this path is incorrect, edit the top of `dist-osx.sh`.
+
+Then run from this directory
+```bash
+bash dist-osx.sh
+```
+or equivalently
+```
+make dist-osx
 ```
