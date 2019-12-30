@@ -1,11 +1,11 @@
 
-PY=/usr/local/bin/python3
+PY=python3
 
 echo 
 echo Installing Python virtualenv
 echo
 
-$PY -m pip install virtualenv
+$PY -m pip install virtualenv --user
 rm -rf dist build
 mkdir build
 
