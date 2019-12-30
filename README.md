@@ -31,3 +31,7 @@ or equivalently
 ```
 make dist-osx
 ```
+
+#### On fresh install of Catalina
+
+open terminal type `git`, this promptes developer tools to install.  Install git and python 3.  Then checkout repo, set `$PY=python3` and run `dist-osx.sh`.
