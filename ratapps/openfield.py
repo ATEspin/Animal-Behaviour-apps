@@ -303,11 +303,12 @@ class ControlWindow(QtGui.QWidget):
             self.btn_refresh.setText("No live")
             
     def adjust_gamma(self,image, gamma):
-        	invGamma = 1.0 / gamma
-        	table = np.array([((i / 255.0) ** invGamma) * 255
-        		for i in np.arange(0, 256)]).astype("uint8")
-         
-        	return cv2.LUT(image, table)
+        if gamma > 0:
+            invGamma = 1.0 / gamma
+            table = np.array([((i / 255.0) ** invGamma) * 255
+                for i in np.arange(0, 256)]).astype("uint8")
+        
+        return cv2.LUT(image, table)
             
     def selectionchange(self):
         self.cap.set(cv2.CAP_PROP_POS_FRAMES,self.videoFrame.sl_frame.value())    
