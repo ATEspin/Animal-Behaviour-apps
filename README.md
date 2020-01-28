@@ -14,4 +14,14 @@ Once Python 3 is installed, Iistall by installing package with `pip`. In a comma
 - `pip install virtualenv`
 - `virtualenv venv`
 - `source venv/scripts/activate`
-- `pip install . pyinstaller`
+- `pip install . pyinstaller
+
+### Updating apps for Python 3 + opencv-python
+- Add brackets to `print` statements
+- `QtGui.QFileDialog.getOpenFileName()` to  `QtGui.QFileDialog.getOpenFileName()[0]`
+- `_,cnts,_= cv2.findContours(` to `cnts, _ = cv2.findContours(`
+- In `nextFrameSlot()` changed if from
+  - `#if nframe < (self.length - 10):` to
+  - `if nframe < (self.frame_end - 10):`
+  - for timer bug
+
