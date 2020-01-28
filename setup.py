@@ -7,7 +7,7 @@ setup(name='rat-apps',
       author = 'Abel Torres-Espin, Callum Doolin',
       author_email = 'callum@resolvedinstruments.com',
 
-      scripts = ['scripts/Xmaze.py'],
+      # scripts = ['scripts/Xmaze.py'],
 
       install_requires = [
             'pyqtgraph',

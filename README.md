@@ -6,7 +6,7 @@ Tools for analysis of rat behavioral experiments.
 
 Requires Python 3.  
 
-Once Python 3 is installed, Iistall by installing package with `pip`. In a command line change directories to this folder, ie. one containing `setup.py` and run `pip install .`.  This will install `Xmaze.py` to the Python `Scripts` folder.
+Once Python 3 is installed, Install by installing package with `pip`. In a command line change directories to this folder, ie. one containing `setup.py` and run `pip install .`.  This will install Xmaze.py to the python scripts folder which can then be run.
 
 ### Dist on windows
 
@@ -38,6 +38,8 @@ open terminal type `git`, this promptes developer tools to install.  Install git
 
 
 
+
+
 ### Updating apps for Python 3 + opencv-python
 
 - Add brackets to `print` statements
@@ -47,3 +49,8 @@ open terminal type `git`, this promptes developer tools to install.  Install git
   - `#if nframe < (self.length - 10):` to
   - `if nframe < (self.frame_end - 10):`
   - for timer bug
+<<<<<<< Updated upstream
+=======
+- `adjust_gamma` has bug where `gamma` can be 0
+
+>>>>>>> Stashed changes
