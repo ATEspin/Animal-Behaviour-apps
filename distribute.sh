@@ -63,25 +63,25 @@ echo
 echo Distributing Xmaze
 echo
 sleep 1
-pyinstaller ratapps/xmaze.py $PYINSTALL_OPTS
+pyinstaller ratapps/xmaze.py -n Xmaze $PYINSTALL_OPTS
 
 echo
 echo Distributing SPGanalysis
 echo
 sleep 1
-pyinstaller ratapps/spganalysis.py $PYINSTALL_OPTS
+pyinstaller ratapps/spganalysis.py -n SPGAnalysis $PYINSTALL_OPTS
 
 echo
 echo Distributing Whitebox
 echo
 sleep 1
-pyinstaller ratapps/whitebox.py $PYINSTALL_OPTS
+pyinstaller ratapps/whitebox.py -n Whitebox $PYINSTALL_OPTS
 
 echo
 echo Distributing Openfield
 echo
 sleep 1
-pyinstaller ratapps/openfield.py $PYINSTALL_OPTS
+pyinstaller ratapps/openfield.py -n Openfield $PYINSTALL_OPTS
 
 echo
 echo Cleaning up

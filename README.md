@@ -31,7 +31,7 @@ or on Max OSX:
 ```bash
 python3 -m ratapps <app>
 ```
-Valid `<app>` values are:
+Valid applications (`<app>` values) are:
 - Xmaze
 - Openfield
 - Whitebox
