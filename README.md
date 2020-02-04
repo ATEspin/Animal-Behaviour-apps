@@ -2,15 +2,17 @@
 
 These are a set of Python-based GUI applications for the analysis of various rat behavioral tests performed for rehabilitation after spinal cord injury.
 
-The programs were written by Abel Torres Espín for analysis at the Karim Fouad lab at the University of Alberta in Edmonton, Alberta, Canada.
+The programs were written by Abel Torres Espín for analysis at [The Fouad Lab](http://www.rehabresearch.ualberta.ca/karimfouad/about_karim) at the University of Alberta in Edmonton, Alberta, Canada.
 
 ## Installing
 
-The easiest way to get started is to download pre-bundled versions of the application.
+The easiest way to get started is to download pre-bundled versions of the application from [Github Releases](https://github.com/cdoolin/rat-apps/releases)
+
+
 
 ### Installing into existing Python environment
 
-Rat-apps can be installed as a module in an existing Python installation. This can reduce the size of the applications and improve startup time.
+Otherwise, for more advanced users, Rat Apps can be installed as a module in an existing Python installation. This can reduce the size of the applications and improve startup time.
 
 Once Python 3 is installed, Install by installing package with `pip`. From a command prompt working in this folder, ie. one containing `setup.py` and run, on windows:
 ```bash
