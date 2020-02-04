@@ -2,12 +2,21 @@
 
 from distutils.core import setup
 
-setup(name='rat-apps',
+setup(name='Rat Apps',
       version = '0.2',
       author = 'Abel Torres-Espin, Callum Doolin',
       author_email = 'callum@resolvedinstruments.com',
+      packages = ["ratapps"],
 
-      # scripts = ['scripts/Xmaze.py'],
+      entry_points = {
+            'console_scripts': [
+                  'Xmaze = ratapps.xmaze:main',
+                  'Openfield = ratapps.openfield:main',
+                  'Whitebox = ratapps.whitebox:main',
+                  'SPGAnalysis = ratapps.spganalysis:main',
+            ]
+      },
+
 
       install_requires = [
             'pyqtgraph',

@@ -1,56 +1,60 @@
-# rat-apps
+# Rat Apps
 
-Tools for analysis of rat behavioral experiments.
+These are a set of Python-based GUI applications for the analysis of various rat behavioral tests performed for rehabilitation after spinal cord injury.
 
-### Installing
+The programs were written by Abel Torres Espín for analysis at the Karim Fouad lab at the University of Alberta in Edmonton, Alberta, Canada.
 
-Requires Python 3.  
+## Installing
 
-Once Python 3 is installed, Install by installing package with `pip`. In a command line change directories to this folder, ie. one containing `setup.py` and run `pip install .`.  This will install Xmaze.py to the python scripts folder which can then be run.
+The easiest way to get started is to download pre-bundled versions of the application.
 
-### Dist on windows
+### Installing into existing Python environment
 
-To create a folder with .exe files that can be run on any Windows computer without needing to install Python, run the `dist-windows.sh` script using git bash.  ie.
+Rat-apps can be installed as a module in an existing Python installation. This can reduce the size of the applications and improve startup time.
+
+Once Python 3 is installed, Install by installing package with `pip`. From a command prompt working in this folder, ie. one containing `setup.py` and run, on windows:
 ```bash
-bash dist-windows.sh
+py -3 -m pip install .
 ```
-or equivalently,
+or on Mac OSX:
+```
+sudo pip3 install .
+```
+
+This will install the `ratapps` module as well as create executable Python scripts for the various apps in the Python scripts directory.  These can then be run by typing the name of the application directly in the console.
+
+Alternatively, the applications can be run by calling the python module and passing the application name as an argument.  This is more verbose, but may be required if the Python `scripts` directory is not included in the computers global Path.  To run via module, on Windows run:
 ```bash
-make dist-windows
+py -3 -m ratapps <app>
 ```
-
-### Dist on OSX
-
-By default, looks for Python 3 at `/usr/local/bin/python3`, this was to use `brew` Python over Anaconda Python.  If this path is incorrect, edit the top of `dist-osx.sh`.
-
-Then run from this directory
+or on Max OSX:
 ```bash
-bash dist-osx.sh
+python3 -m ratapps <app>
 ```
-or equivalently
+Valid `<app>` values are:
+- Xmaze
+- Openfield
+- Whitebox
+- SPGAnalysis
+
+
+
+### Bundling rat-apps to stand-alone files
+
+The applications can be bundled using [PyInstaller](https://www.pyinstaller.org/) to standalone files whoch can be copied to computers without an existing Python installation.
+
+This can be performed with the included `distribute.sh` script, which can be run with
+```bash
+bash distribute.sh
 ```
-make dist-osx
-```
+Since this is a bash script, to run on Windows, a bash environment such as the one included with [Git for Windows](https://git-scm.com/download/win) is required.
 
-#### On fresh install of Catalina
+`distribute.sh` requires an existing Python environment to be available. It uses common default python, but if the Python installer cannot be found, edit the `distibute.sh` and set the `PY` variable.
 
-open terminal type `git`, this promptes developer tools to install.  Install git and python 3.  Then checkout repo, set `$PY=python3` and run `dist-osx.sh`.
+When run, `distribute.sh` performs the following:
+- Ensures `virtualenv` module is installed
+- Creates a new Python virtualenvironment in this directory and installs rat-apps and all requirments to it
+- Runs PyInstaller on the applications to generate stand-alone versions.
 
 
 
-
-
-### Updating apps for Python 3 + opencv-python
-
-- Add brackets to `print` statements
-- `QtGui.QFileDialog.getOpenFileName()` to  `QtGui.QFileDialog.getOpenFileName()[0]`
-- `_,cnts,_= cv2.findContours(` to `cnts, _ = cv2.findContours(`
-- In `nextFrameSlot()` changed if from
-  - `#if nframe < (self.length - 10):` to
-  - `if nframe < (self.frame_end - 10):`
-  - for timer bug
-<<<<<<< Updated upstream
-=======
-- `adjust_gamma` has bug where `gamma` can be 0
-
->>>>>>> Stashed changes
