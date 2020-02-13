@@ -523,17 +523,17 @@ class videoWindow(QtGui.QWidget):
             
             if self.window.play_button.text() == "Stop":
                 self.window.playBtn()
-            popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= window.X0))
-            popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= window.T))
-            popMenu.addAction(QtGui.QAction("K", self,  enabled=True,triggered= window.K))
-            popMenu.addAction(QtGui.QAction("D", self,  enabled=True,triggered= window.D))
-            popMenu.addAction(QtGui.QAction("S", self,  enabled=True,triggered= window.S))
-            popMenu.addAction(QtGui.QAction("I", self,  enabled=True,triggered= window.I))
+            popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= self.window.X0))
+            popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= self.window.T))
+            popMenu.addAction(QtGui.QAction("K", self,  enabled=True,triggered= self.window.K))
+            popMenu.addAction(QtGui.QAction("D", self,  enabled=True,triggered= self.window.D))
+            popMenu.addAction(QtGui.QAction("S", self,  enabled=True,triggered= self.window.S))
+            popMenu.addAction(QtGui.QAction("I", self,  enabled=True,triggered= self.window.I))
             popMenu.addAction(QtGui.QAction("----------", self,  enabled=True)) 
-            popMenu.addAction(QtGui.QAction("Set Line 1", self,  enabled=True,triggered= window.setLine1))
-            popMenu.addAction(QtGui.QAction("Set Line 2", self,  enabled=True,triggered= window.setLine2))
+            popMenu.addAction(QtGui.QAction("Set Line 1", self,  enabled=True,triggered= self.window.setLine1))
+            popMenu.addAction(QtGui.QAction("Set Line 2", self,  enabled=True,triggered= self.window.setLine2))
             popMenu.addAction(QtGui.QAction("----------", self,  enabled=False)) 
-            popMenu.addAction(QtGui.QAction("Erese", self,  enabled=True, triggered= window.Erese))
+            popMenu.addAction(QtGui.QAction("Erese", self,  enabled=True, triggered= self.window.Erese))
             popMenu.exec_(QtGui.QCursor.pos())
 
 def main():

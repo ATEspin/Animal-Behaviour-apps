@@ -245,9 +245,9 @@ class ControlWindow(QtGui.QWidget):
                 self.fps=self.cap.get(cv2.CAP_PROP_FPS)
                 self.cap.set(cv2.CAP_PROP_FPS,self.fps*4)
                 self.proBar.setMinimum(1)
-                self.proBar.setMaximum(self.length)
+                self.proBar.setMaximum(self.length - 1)
                 self.proBar.setValue(0)
-                self.sl_frame.setMaximum(self.length)
+                self.sl_frame.setMaximum(self.length - 1)
                 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.nextFrameSlot)
