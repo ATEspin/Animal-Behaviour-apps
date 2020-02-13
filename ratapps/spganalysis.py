@@ -245,6 +245,11 @@ class ControlWindow(QtGui.QWidget):
         
     def nextFrameSlot(self):
         nframe = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+
+        if nframe >= self.length - 1:
+            self.stop()
+            return
+
         ret, frame = self.cap.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = cv2.resize(frame,None,fx=self.magnification, fy=self.magnification, interpolation = cv2.INTER_NEAREST)
@@ -261,8 +266,6 @@ class ControlWindow(QtGui.QWidget):
         self.cap.set(cv2.CAP_PROP_POS_FRAMES,nframe)
         self.nextFrameSlot() 
                 
-    def start(self):
-        self.timer.start(1000. / self.fps2)
    
     def playBtn(self):
         if self.fplay_button.isChecked():
@@ -271,20 +274,23 @@ class ControlWindow(QtGui.QWidget):
             self.fps2=self.fps
             
         if (self.play_button.text()=="Play"):
-            self.play_button.setText("Stop")
             self.start()
         else:
-            self.play_button.setText("Play")
             self.stop()
 
     def stop(self):
+        self.play_button.setText("Play")
         self.timer.stop()
+
+    def start(self):
+        self.play_button.setText("Stop")
+        self.timer.start(1000. / self.fps2)
     
     def openright(self):
         popMenu = QtGui.QMenu()
         
         if (self.play_button.text()=="Stop"):
-            self.playBtn()
+            self.gtn()
             
         popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= self.X0))
         popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= self.T))
