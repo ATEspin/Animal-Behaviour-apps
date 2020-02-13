@@ -174,7 +174,7 @@ class ControlWindow(QtGui.QWidget):
                 self.proBar.setMinimum(1)
                 self.proBar.setMaximum(self.length)
                 self.proBar.setValue(0)
-                self.videoFrame=videoWindow(500,500)
+                self.videoFrame=videoWindow(500, 500, self)
                 self.videoFrame.sl_frame.setMaximum(self.length)
                 self.frame_end=self.length
                 self.frame_start=1
@@ -221,11 +221,13 @@ class ControlWindow(QtGui.QWidget):
         self.selectionchange()
          
     def adjust_gamma(self, image, gamma):
-        if gamma > 0:
-            invGamma = 1.0 / gamma
-            table = np.array([((i / 255.0) ** invGamma) * 255
-                for i in np.arange(0, 256)]).astype("uint8")
-    
+        if gamma <= 0:
+            gamma = .1
+
+        invGamma = 1.0 / gamma
+        table = np.array([((i / 255.0) ** invGamma) * 255
+            for i in np.arange(0, 256)]).astype("uint8")
+
         return cv2.LUT(image, table)
             
     def selectionchange(self):
@@ -378,7 +380,7 @@ class ControlWindow(QtGui.QWidget):
         self.proBar.setMaximum(self.frame_end)
                 
 class videoWindow:
-        def __init__(self, w,h):
+        def __init__(self, w, h, window):
             self.window2=QtGui.QWidget()
             self.window2.resize(w, h)
             
@@ -433,7 +435,10 @@ class videoWindow:
             layout.addWidget(self.Lableframe, 3,0)
             self.window2.show()
                 
-if __name__ == '__main__':
+def main():
     app = QtGui.QApplication(sys.argv)
     window = ControlWindow()
     sys.exit(app.exec_())
+        
+if __name__ == '__main__':
+    main()
