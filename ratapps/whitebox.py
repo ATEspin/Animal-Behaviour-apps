@@ -175,7 +175,7 @@ class ControlWindow(QtGui.QWidget):
                 self.proBar.setMaximum(self.length)
                 self.proBar.setValue(0)
                 self.videoFrame=videoWindow(500, 500, self)
-                self.videoFrame.sl_frame.setMaximum(self.length)
+                self.videoFrame.sl_frame.setMaximum(self.length - 1)
                 self.frame_end=self.length
                 self.frame_start=1
                 duration=int((self.frame_end-self.frame_start)/self.fps/60)

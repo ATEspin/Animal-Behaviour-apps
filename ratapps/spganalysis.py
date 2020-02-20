@@ -245,6 +245,11 @@ class ControlWindow(QtGui.QWidget):
         
     def nextFrameSlot(self):
         nframe = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+
+        if nframe >= self.length - 1:
+            self.stop()
+            return
+
         ret, frame = self.cap.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = cv2.resize(frame,None,fx=self.magnification, fy=self.magnification, interpolation = cv2.INTER_NEAREST)
@@ -261,8 +266,6 @@ class ControlWindow(QtGui.QWidget):
         self.cap.set(cv2.CAP_PROP_POS_FRAMES,nframe)
         self.nextFrameSlot() 
                 
-    def start(self):
-        self.timer.start(1000. / self.fps2)
    
     def playBtn(self):
         if self.fplay_button.isChecked():
@@ -271,20 +274,23 @@ class ControlWindow(QtGui.QWidget):
             self.fps2=self.fps
             
         if (self.play_button.text()=="Play"):
-            self.play_button.setText("Stop")
             self.start()
         else:
-            self.play_button.setText("Play")
             self.stop()
 
     def stop(self):
+        self.play_button.setText("Play")
         self.timer.stop()
+
+    def start(self):
+        self.play_button.setText("Stop")
+        self.timer.start(1000. / self.fps2)
     
     def openright(self):
         popMenu = QtGui.QMenu()
         
         if (self.play_button.text()=="Stop"):
-            self.playBtn()
+            self.gtn()
             
         popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= self.X0))
         popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= self.T))
@@ -523,17 +529,17 @@ class videoWindow(QtGui.QWidget):
             
             if self.window.play_button.text() == "Stop":
                 self.window.playBtn()
-            popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= window.X0))
-            popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= window.T))
-            popMenu.addAction(QtGui.QAction("K", self,  enabled=True,triggered= window.K))
-            popMenu.addAction(QtGui.QAction("D", self,  enabled=True,triggered= window.D))
-            popMenu.addAction(QtGui.QAction("S", self,  enabled=True,triggered= window.S))
-            popMenu.addAction(QtGui.QAction("I", self,  enabled=True,triggered= window.I))
+            popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= self.window.X0))
+            popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= self.window.T))
+            popMenu.addAction(QtGui.QAction("K", self,  enabled=True,triggered= self.window.K))
+            popMenu.addAction(QtGui.QAction("D", self,  enabled=True,triggered= self.window.D))
+            popMenu.addAction(QtGui.QAction("S", self,  enabled=True,triggered= self.window.S))
+            popMenu.addAction(QtGui.QAction("I", self,  enabled=True,triggered= self.window.I))
             popMenu.addAction(QtGui.QAction("----------", self,  enabled=True)) 
-            popMenu.addAction(QtGui.QAction("Set Line 1", self,  enabled=True,triggered= window.setLine1))
-            popMenu.addAction(QtGui.QAction("Set Line 2", self,  enabled=True,triggered= window.setLine2))
+            popMenu.addAction(QtGui.QAction("Set Line 1", self,  enabled=True,triggered= self.window.setLine1))
+            popMenu.addAction(QtGui.QAction("Set Line 2", self,  enabled=True,triggered= self.window.setLine2))
             popMenu.addAction(QtGui.QAction("----------", self,  enabled=False)) 
-            popMenu.addAction(QtGui.QAction("Erese", self,  enabled=True, triggered= window.Erese))
+            popMenu.addAction(QtGui.QAction("Erese", self,  enabled=True, triggered= self.window.Erese))
             popMenu.exec_(QtGui.QCursor.pos())
 
 def main():
