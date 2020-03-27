@@ -23,7 +23,12 @@ or on Mac OSX:
 sudo pip3 install .
 ```
 
+
+
 This will install the `ratapps` module as well as create executable Python scripts for the various apps in the Python scripts directory.  These can then be run by typing the name of the application directly in the console.
+
+
+**Note: Currently pyqtgraph 0.10 is incompatable with Python 3.8.**  To install the development version of pyqtgraph with Python 3.8, use `pip install git+https://github.com/pyqtgraph/pyqtgraph@develop`
 
 Alternatively, the applications can be run by calling the python module and passing the application name as an argument.  This is more verbose, but may be required if the Python scripts directory is not included in the computers global Path.  To run the module on Windows use:
 ```bash
