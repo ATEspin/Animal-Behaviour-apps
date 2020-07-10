@@ -48,7 +48,7 @@ Valid applications (`<app>` values) are:
 
 ### Bundling Rat-Apps to stand-alone files
 
-The applications can be bundled using [PyInstaller](https://www.pyinstaller.org/) to standalone files whoch can be copied to computers without an existing Python installation.  Pre-built versions of these can be found on [the Github Releases page](https://github.com/cdoolin/rat-apps/releases)
+The applications can be bundled using [PyInstaller](https://www.pyinstaller.org/) to standalone files which can be copied to computers without an existing Python installation.  Pre-built versions of these can be found on [the Github Releases page](https://github.com/cdoolin/rat-apps/releases)
 
 Bundling can be performed with the included `distribute.sh` script, which can be run with
 ```bash
