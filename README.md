@@ -2,7 +2,7 @@
 
 These are a set of Python-based GUI applications for the analysis of various rat behavioral tests performed for rehabilitation after spinal cord injury.
 
-The programs were written by Abel Torres Espín for analysis at [The Fouad Lab](http://www.rehabresearch.ualberta.ca/karimfouad/about_karim) at the University of Alberta in Edmonton, Alberta.
+The programs were written by [Abel Torres Espín](https://github.com/ATEspin) for analysis at [The Fouad Lab](http://www.rehabresearch.ualberta.ca/karimfouad/about_karim) at the University of Alberta in Edmonton, Alberta.
 
 ## Installing
 
