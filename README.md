@@ -9,10 +9,9 @@ The programs were written by [Abel Torres Espín](https://github.com/ATEspin) fo
 The easiest way to get started is to download pre-bundled versions of the application from [the Github Releases page](https://github.com/cdoolin/rat-apps/releases)
 
 
-
 ### Installing into existing Python environment
 
-For more advanced users, Rat-Apps can be installed as a module in an existing Python installation. This can reduce the total size of the applications and improve startup time.
+For more advanced users, Animal-Behabiour-Apps can be installed as a module in an existing Python installation. This can reduce the total size of the applications and improve startup time.
 
 Once Python 3 is setup, install with the `pip` command. From a command prompt working in this folder, ie. one containing `setup.py`, run on windows:
 ```bash
