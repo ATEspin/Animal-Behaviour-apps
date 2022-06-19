@@ -1,4 +1,4 @@
-# Rat-Apps
+# Animal-Behabiour-Apps
 
 These are a set of Python-based GUI applications for the analysis of various rat behavioral tests performed for rehabilitation after spinal cord injury.
 
