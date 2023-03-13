@@ -1,6 +1,6 @@
 import sys
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
+from pyqtgraph.Qt import QtCore, QtWidgets
 import numpy as np
 import cv2
 import math
@@ -9,9 +9,9 @@ import os
 
 VERSION = (0, 2, 0)
 
-class ControlWindow(QtGui.QWidget):
+class ControlWindow(QtWidgets.QWidget):
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
         self.cap = None
         self.filename=None
         self.line1_x=300
@@ -20,7 +20,7 @@ class ControlWindow(QtGui.QWidget):
         
         self.resize(400, 800)
         
-        self.videoSize = QtGui.QComboBox(self)
+        self.videoSize = QtWidgets.QComboBox(self)
         self.videoSize.addItem("1X")
         self.videoSize.addItem("1.5X")
         self.videoSize.addItem("2X")
@@ -31,60 +31,60 @@ class ControlWindow(QtGui.QWidget):
         self.videoSize.activated.connect(self.magnific)
         self.videoSize.setGeometry(QtCore.QRect(675, 30, 50, 20))
 
-        self.LablePath = QtGui.QLineEdit(self)
+        self.LablePath = QtWidgets.QLineEdit(self)
         self.LablePath.setEnabled(False)
         self.LablePath.setGeometry(QtCore.QRect(90, 10, 641, 20))
         self.LablePath.setFrame(False)
         
-        self.LableCamera = QtGui.QLineEdit(self)
+        self.LableCamera = QtWidgets.QLineEdit(self)
         self.LableCamera.setEnabled(False)
         self.LableCamera.setGeometry(QtCore.QRect(675, 10, 50, 20))
         self.LableCamera.setFrame(False)
         self.LableCamera.setText("Camera:")
         
-        self.Camera = QtGui.QComboBox(self)
+        self.Camera = QtWidgets.QComboBox(self)
         self.Camera.addItem("Left")
         self.Camera.addItem("Right")
         self.Camera.setEnabled(True)
         self.Camera.setGeometry(QtCore.QRect(675, 30, 50, 20))
         
-        self.LableRatL = QtGui.QLineEdit(self)
+        self.LableRatL = QtWidgets.QLineEdit(self)
         self.LableRatL.setEnabled(False)
         self.LableRatL.setGeometry(QtCore.QRect(735, 10, 50, 20))
         self.LableRatL.setFrame(False)
         self.LableRatL.setText("Rat L:")
         
-        self.LableRat1 = QtGui.QLineEdit(self)
+        self.LableRat1 = QtWidgets.QLineEdit(self)
         self.LableRat1.setEnabled(True)
         self.LableRat1.setText("0")
         self.LableRat1.setGeometry(QtCore.QRect(735, 30, 40, 20))
         self.LableRat1.setFrame(True)
         
-        self.LableRatM = QtGui.QLineEdit(self)
+        self.LableRatM = QtWidgets.QLineEdit(self)
         self.LableRatM.setEnabled(False)
         self.LableRatM.setGeometry(QtCore.QRect(785, 10, 50, 20))
         self.LableRatM.setFrame(False)
         self.LableRatM.setText("Rat M:")
         
-        self.LableRat2 = QtGui.QLineEdit(self)
+        self.LableRat2 = QtWidgets.QLineEdit(self)
         self.LableRat2.setEnabled(True)
         self.LableRat2.setText("0")
         self.LableRat2.setGeometry(QtCore.QRect(785, 30, 40, 20))
         self.LableRat2.setFrame(True)
         
-        self.LableRatR = QtGui.QLineEdit(self)
+        self.LableRatR = QtWidgets.QLineEdit(self)
         self.LableRatR.setEnabled(False)
         self.LableRatR.setGeometry(QtCore.QRect(835, 10, 50, 20))
         self.LableRatR.setFrame(False)
         self.LableRatR.setText("Rat R:")
         
-        self.LableRat3 = QtGui.QLineEdit(self)
+        self.LableRat3 = QtWidgets.QLineEdit(self)
         self.LableRat3.setEnabled(True)
         self.LableRat3.setText("0")
         self.LableRat3.setGeometry(QtCore.QRect(835, 30, 40, 20))
         self.LableRat3.setFrame(True)
         
-        self.Table = QtGui.QTableWidget(self)
+        self.Table = QtWidgets.QTableWidget(self)
         self.Table.setGeometry(QtCore.QRect(675, 60,235, 560))
         self.Table.setColumnCount(5)
         self.Table.resizeRowsToContents()
@@ -95,7 +95,7 @@ class ControlWindow(QtGui.QWidget):
         self.Table.resizeColumnsToContents()
         self.Table.verticalHeader().setVisible(False)
         
-        self.TableSumary = QtGui.QTableWidget(self)
+        self.TableSumary = QtWidgets.QTableWidget(self)
         self.TableSumary.setGeometry(QtCore.QRect(300, 530,340,110))
         self.TableSumary.setEnabled(False)
         self.TableSumary.setColumnCount(8)
@@ -108,29 +108,29 @@ class ControlWindow(QtGui.QWidget):
         
         for i in range (0, 3):
             for j in range (0,8):
-                newitem = QtGui.QTableWidgetItem("0")
+                newitem = QtWidgets.QTableWidgetItem("0")
                 self.TableSumary.setItem(i, j, newitem)        
         
-        self.open_button = QtGui.QPushButton(self)
+        self.open_button = QtWidgets.QPushButton(self)
         self.open_button.setText("Open Video")
         self.open_button.clicked.connect(self.getfile)
         self.open_button.setGeometry(QtCore.QRect(9, 9, 75, 23))
         
-        self.save_button = QtGui.QPushButton(self)
+        self.save_button = QtWidgets.QPushButton(self)
         self.save_button.setText("Save data")
         self.save_button.clicked.connect(self.handleSave)
         self.save_button.setGeometry(QtCore.QRect(575, 9, 75, 23))
         
-        self.play_button = QtGui.QPushButton(self)
+        self.play_button = QtWidgets.QPushButton(self)
         self.play_button.setText("Play")
         self.play_button.clicked.connect(self.playBtn)
         self.play_button.setGeometry(QtCore.QRect(9, 530, 75, 23))
         
-        self.nplay_button = QtGui.QRadioButton(self)
+        self.nplay_button = QtWidgets.QRadioButton(self)
         self.nplay_button.setText("Normal")
         self.nplay_button.setGeometry(QtCore.QRect(90, 530, 75, 23))
         
-        self.fplay_button = QtGui.QRadioButton(self)
+        self.fplay_button = QtWidgets.QRadioButton(self)
         self.fplay_button.setText("Fast")
         self.fplay_button.setChecked(True)
         self.fplay_button.setGeometry(QtCore.QRect(150, 530, 75, 23))
@@ -140,7 +140,7 @@ class ControlWindow(QtGui.QWidget):
         self.LableRat2.textChanged.connect(self.tableHeader)
         self.LableRat3.textChanged.connect(self.tableHeader)
                
-        layout = QtGui.QGridLayout()
+        layout = QtWidgets.QGridLayout()
         self.setLayout(layout)
         
         layout.addWidget(self.open_button,0,0)
@@ -183,19 +183,19 @@ class ControlWindow(QtGui.QWidget):
                 self.videoFrame=videoWindow(window=self)
                 
                 for i in range(0, self.length):
-                    newitem = QtGui.QTableWidgetItem(str(i))
+                    newitem = QtWidgets.QTableWidgetItem(str(i))
                     self.Table.setItem(i, 0, newitem)
                     
-                    newitem = QtGui.QTableWidgetItem(str(self.fps*i))
+                    newitem = QtWidgets.QTableWidgetItem(str(self.fps*i))
                     self.Table.setItem(i, 1, newitem)
                     
                     for j in range(2, 5):
-                       newitem = QtGui.QTableWidgetItem("-")
+                       newitem = QtWidgets.QTableWidgetItem("-")
                        self.Table.setItem(i, j, newitem)
                        0
                 for i in range(0, 3):
                     for j in range(0,8):
-                        newitem = QtGui.QTableWidgetItem("0")
+                        newitem = QtWidgets.QTableWidgetItem("0")
                         self.TableSumary.setItem(i, j, newitem) 
                 
                 
@@ -218,7 +218,7 @@ class ControlWindow(QtGui.QWidget):
         if self.cap:
             self.endCapture()
             
-        filename = QtGui.QFileDialog.getOpenFileName(self, 'Open file', 
+        filename = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', 
                         'c:\\',"Video files (*.avi *.mp4 *.MOD)")[0]
         if os.path.exists(filename):
             self.filename = os.path.abspath(filename)
@@ -253,8 +253,8 @@ class ControlWindow(QtGui.QWidget):
         ret, frame = self.cap.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = cv2.resize(frame,None,fx=self.magnification, fy=self.magnification, interpolation = cv2.INTER_NEAREST)
-        img = QtGui.QImage(frame, frame.shape[1], frame.shape[0], QtGui.QImage.Format_RGB888)
-        pix = QtGui.QPixmap.fromImage(img)
+        img = QtWidgets.QImage(frame, frame.shape[1], frame.shape[0], QtWidgets.QImage.Format_RGB888)
+        pix = QtWidgets.QPixmap.fromImage(img)
         self.videoFrame.video_frame.setPixmap(pix)
         self.videoFrame.video_screen.resize(frame.shape[1], frame.shape[0])
         self.videoFrame.video_screen.setGeometry(QtCore.QRect(10, 40, frame.shape[1], frame.shape[0]))
@@ -287,23 +287,23 @@ class ControlWindow(QtGui.QWidget):
         self.timer.start(1000. / self.fps2)
     
     def openright(self):
-        popMenu = QtGui.QMenu()
+        popMenu = QtWidgets.QMenu()
         
         if (self.play_button.text()=="Stop"):
             self.gtn()
             
-        popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= self.X0))
-        popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= self.T))
-        popMenu.addAction(QtGui.QAction("K", self,  enabled=True,triggered= self.K))
-        popMenu.addAction(QtGui.QAction("D", self,  enabled=True,triggered= self.D))
-        popMenu.addAction(QtGui.QAction("S", self,  enabled=True,triggered= self.S))
-        popMenu.addAction(QtGui.QAction("I", self,  enabled=True,triggered= self.I))
-        popMenu.addAction(QtGui.QAction("----------", self,  enabled=False)) 
-        popMenu.addAction(QtGui.QAction("Set Line 1", self,  enabled=True,triggered= self.setLine1))
-        popMenu.addAction(QtGui.QAction("Set Line 2", self,  enabled=True,triggered= self.setLine2))
-        popMenu.addAction(QtGui.QAction("----------", self,  enabled=False)) 
-        popMenu.addAction(QtGui.QAction("Erese", self,  enabled=True, triggered= self.Erese))
-        popMenu.exec_(QtGui.QCursor.pos())
+        popMenu.addAction(QtWidgets.QAction("X0", self,  enabled=True, triggered= self.X0))
+        popMenu.addAction(QtWidgets.QAction("T", self,  enabled=True, triggered= self.T))
+        popMenu.addAction(QtWidgets.QAction("K", self,  enabled=True,triggered= self.K))
+        popMenu.addAction(QtWidgets.QAction("D", self,  enabled=True,triggered= self.D))
+        popMenu.addAction(QtWidgets.QAction("S", self,  enabled=True,triggered= self.S))
+        popMenu.addAction(QtWidgets.QAction("I", self,  enabled=True,triggered= self.I))
+        popMenu.addAction(QtWidgets.QAction("----------", self,  enabled=False)) 
+        popMenu.addAction(QtWidgets.QAction("Set Line 1", self,  enabled=True,triggered= self.setLine1))
+        popMenu.addAction(QtWidgets.QAction("Set Line 2", self,  enabled=True,triggered= self.setLine2))
+        popMenu.addAction(QtWidgets.QAction("----------", self,  enabled=False)) 
+        popMenu.addAction(QtWidgets.QAction("Erese", self,  enabled=True, triggered= self.Erese))
+        popMenu.exec_(QtWidgets.QCursor.pos())
      
     def keyPressEvent(self, event):          
          key = event.key()
@@ -360,7 +360,7 @@ class ControlWindow(QtGui.QWidget):
         if self.x>=self.line2_x: j=4
             
         olditem=self.Table.item(currentFrame, j).text()
-        newitem = QtGui.QTableWidgetItem(value)
+        newitem = QtWidgets.QTableWidgetItem(value)
         self.Table.setItem(currentFrame, j, newitem)
         self.Table.selectRow(currentFrame)
         
@@ -386,35 +386,35 @@ class ControlWindow(QtGui.QWidget):
         
         if value=="X0":
             suma0=int(self.TableSumary.item(Rat,0).text())+operator
-            newitem = QtGui.QTableWidgetItem(str(suma0))
+            newitem = QtWidgets.QTableWidgetItem(str(suma0))
             self.TableSumary.setItem(Rat,0, newitem)
         if value=="T":
             suma1=int(self.TableSumary.item(Rat,1).text())+operator
-            newitem = QtGui.QTableWidgetItem(str(suma1))
+            newitem = QtWidgets.QTableWidgetItem(str(suma1))
             self.TableSumary.setItem(Rat,1, newitem)
         if value=="K":
             suma2=int(self.TableSumary.item(Rat,2).text())+operator
-            newitem = QtGui.QTableWidgetItem(str(suma2))
+            newitem = QtWidgets.QTableWidgetItem(str(suma2))
             self.TableSumary.setItem(Rat,2, newitem)
         if value=="D":
             suma3=int(self.TableSumary.item(Rat,3).text())+operator
-            newitem = QtGui.QTableWidgetItem(str(suma3))
+            newitem = QtWidgets.QTableWidgetItem(str(suma3))
             self.TableSumary.setItem(Rat,3, newitem)
         if value=="S":
             suma4=int(self.TableSumary.item(Rat,4).text())+operator
-            newitem = QtGui.QTableWidgetItem(str(suma4))
+            newitem = QtWidgets.QTableWidgetItem(str(suma4))
             self.TableSumary.setItem(Rat,4, newitem)
         if value=="I":
             suma5=int(self.TableSumary.item(Rat,5).text())+operator
-            newitem = QtGui.QTableWidgetItem(str(suma5))
+            newitem = QtWidgets.QTableWidgetItem(str(suma5))
             self.TableSumary.setItem(Rat,5, newitem)
         
         suma6=suma0+suma1+suma2+suma3+suma4+suma5
-        newitem = QtGui.QTableWidgetItem(str(suma6))
+        newitem = QtWidgets.QTableWidgetItem(str(suma6))
         self.TableSumary.setItem(Rat,6, newitem)
         
         suma7=suma2+suma3+suma4+suma5
-        newitem = QtGui.QTableWidgetItem(str(suma7))
+        newitem = QtWidgets.QTableWidgetItem(str(suma7))
         self.TableSumary.setItem(Rat,7, newitem)
         
     def handleSave(self):
@@ -475,33 +475,33 @@ class ControlWindow(QtGui.QWidget):
                     text_file.write("\t")
                 text_file.write("\n")
             
-class videoWindow(QtGui.QWidget):
+class videoWindow(QtWidgets.QWidget):
         def __init__(self, window):
             self.window = window
-            QtGui.QWidget.__init__(self)
+            QtWidgets.QWidget.__init__(self)
                         
             self.resize(500, 500)
-            layout = QtGui.QGridLayout()
+            layout = QtWidgets.QGridLayout()
             self.setLayout(layout)
             self.keyPressEvent= self.window.keyPressEvent
             
-            self.video_frame=QtGui.QLabel()
+            self.video_frame=QtWidgets.QLabel()
             self.video_frame.setGeometry(QtCore.QRect(10, 40, 640, 480))
-            self.video_frame.setFrameShape(QtGui.QFrame.Box)
+            self.video_frame.setFrameShape(QtWidgets.QFrame.Box)
             
-            self.video_screen=QtGui.QLabel()
+            self.video_screen=QtWidgets.QLabel()
             self.video_screen.setGeometry(QtCore.QRect(10, 40, 640, 480))
             self.video_screen.paintEvent= self.PaintVerticalLine
             self.video_screen.mousePressEvent= self.window.getPos
             self.video_screen.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
             self.video_screen.customContextMenuRequested.connect(self.openright)
             
-            self.sl_frame = QtGui.QSlider()
+            self.sl_frame = QtWidgets.QSlider()
             self.sl_frame.setOrientation(QtCore.Qt.Horizontal)
             self.sl_frame.setMinimum(1)
             self.sl_frame.setMaximum(255)
             self.sl_frame.setValue(1)
-            self.sl_frame.setTickPosition(QtGui.QSlider.TicksBelow)
+            self.sl_frame.setTickPosition(QtWidgets.QSlider.TicksBelow)
             self.sl_frame.setTickInterval(1000)
             self.sl_frame.setGeometry(QtCore.QRect(9, 530, 640, 20))
             self.sl_frame.valueChanged.connect(self.window.nextFrameSlot)
@@ -513,9 +513,9 @@ class videoWindow(QtGui.QWidget):
             self.show()
             
         def PaintVerticalLine(self, event):
-            painter = QtGui.QPainter(self.video_screen)
-            pen = QtGui.QPen()
-            pen.setColor(QtGui.QColor(0,255,0))
+            painter = QtWidgets.QPainter(self.video_screen)
+            pen = QtWidgets.QPen()
+            pen.setColor(QtWidgets.QColor(0,255,0))
             pen.setWidth(2)
             painter.setPen(pen)
             painter.drawLine(self.window.line1_x, 0, self.window.line1_x, self.video_screen.height())
@@ -525,25 +525,25 @@ class videoWindow(QtGui.QWidget):
             painter.drawText((self.video_screen.width() + self.window.line2_x)/2-5, 15, "Rat R")
             
         def openright(self):
-            popMenu = QtGui.QMenu()
+            popMenu = QtWidgets.QMenu()
             
             if self.window.play_button.text() == "Stop":
                 self.window.playBtn()
-            popMenu.addAction(QtGui.QAction("X0", self,  enabled=True, triggered= self.window.X0))
-            popMenu.addAction(QtGui.QAction("T", self,  enabled=True, triggered= self.window.T))
-            popMenu.addAction(QtGui.QAction("K", self,  enabled=True,triggered= self.window.K))
-            popMenu.addAction(QtGui.QAction("D", self,  enabled=True,triggered= self.window.D))
-            popMenu.addAction(QtGui.QAction("S", self,  enabled=True,triggered= self.window.S))
-            popMenu.addAction(QtGui.QAction("I", self,  enabled=True,triggered= self.window.I))
-            popMenu.addAction(QtGui.QAction("----------", self,  enabled=True)) 
-            popMenu.addAction(QtGui.QAction("Set Line 1", self,  enabled=True,triggered= self.window.setLine1))
-            popMenu.addAction(QtGui.QAction("Set Line 2", self,  enabled=True,triggered= self.window.setLine2))
-            popMenu.addAction(QtGui.QAction("----------", self,  enabled=False)) 
-            popMenu.addAction(QtGui.QAction("Erese", self,  enabled=True, triggered= self.window.Erese))
-            popMenu.exec_(QtGui.QCursor.pos())
+            popMenu.addAction(QtWidgets.QAction("X0", self,  enabled=True, triggered= self.window.X0))
+            popMenu.addAction(QtWidgets.QAction("T", self,  enabled=True, triggered= self.window.T))
+            popMenu.addAction(QtWidgets.QAction("K", self,  enabled=True,triggered= self.window.K))
+            popMenu.addAction(QtWidgets.QAction("D", self,  enabled=True,triggered= self.window.D))
+            popMenu.addAction(QtWidgets.QAction("S", self,  enabled=True,triggered= self.window.S))
+            popMenu.addAction(QtWidgets.QAction("I", self,  enabled=True,triggered= self.window.I))
+            popMenu.addAction(QtWidgets.QAction("----------", self,  enabled=True)) 
+            popMenu.addAction(QtWidgets.QAction("Set Line 1", self,  enabled=True,triggered= self.window.setLine1))
+            popMenu.addAction(QtWidgets.QAction("Set Line 2", self,  enabled=True,triggered= self.window.setLine2))
+            popMenu.addAction(QtWidgets.QAction("----------", self,  enabled=False)) 
+            popMenu.addAction(QtWidgets.QAction("Erese", self,  enabled=True, triggered= self.window.Erese))
+            popMenu.exec_(QtWidgets.QCursor.pos())
 
 def main():
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     window = ControlWindow()
     sys.exit(app.exec_())
 
