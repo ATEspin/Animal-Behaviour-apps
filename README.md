@@ -63,4 +63,6 @@ When run, `distribute.sh` performs the following:
 - Runs PyInstaller on the applications to generate stand-alone versions.
 
 
+### Licence
 
+Rat-Apps is freely licenced for use and modifications under the open-source MIT licence.
