@@ -1,17 +1,17 @@
 import sys
-#from PyQt4.QtGui import *
+#from PyQt4.QtWidgets import *
 #from PyQt4.QtCore import *
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
+from pyqtgraph.Qt import QtCore, QtWidgets, QtGui
 import numpy as np
 import cv2
 import math
 import os
 
 
-class ControlWindow(QtGui.QWidget):
+class ControlWindow(QtWidgets.QWidget):
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
         self.cap = None
         self.filename=None
         self.magnification=1
@@ -22,27 +22,27 @@ class ControlWindow(QtGui.QWidget):
         self.resize(500, 300)
         self.setWindowTitle('White box entrance analysis')
         
-        layout = QtGui.QGridLayout(self)
+        layout = QtWidgets.QGridLayout(self)
         self.setLayout(layout)
 
 
-        self.LablePath = QtGui.QLineEdit(self)
+        self.LablePath = QtWidgets.QLineEdit(self)
         self.LablePath.setEnabled(False)
         self.LablePath.setGeometry(QtCore.QRect(90, 10, 641, 20))
         self.LablePath.setFrame(False)
         
-        self.LableRaw = QtGui.QLineEdit(self)
+        self.LableRaw = QtWidgets.QLineEdit(self)
         self.LableRaw.setEnabled(False)
         self.LableRaw.setGeometry(QtCore.QRect(90, 10, 641, 20))
         self.LableRaw.setFrame(False)
         
-        self.LableMag = QtGui.QLineEdit(self)
+        self.LableMag = QtWidgets.QLineEdit(self)
         self.LableMag.setEnabled(False)
         self.LableMag.setGeometry(QtCore.QRect(800, 30, 80, 20))
         self.LableMag.setFrame(False)
         self.LableMag.setText("Video mag.:")
         
-        self.videoSize = QtGui.QComboBox(self)
+        self.videoSize = QtWidgets.QComboBox(self)
         self.videoSize.addItem("1X")
         self.videoSize.addItem("1.5X")
         self.videoSize.addItem("2X")
@@ -53,84 +53,84 @@ class ControlWindow(QtGui.QWidget):
         self.videoSize.activated.connect(self.magnific)
         self.videoSize.setGeometry(QtCore.QRect(675, 30, 50, 20))
                      
-        self.open_button = QtGui.QPushButton(self)
+        self.open_button = QtWidgets.QPushButton(self)
         self.open_button.setText("Open Video")
         self.open_button.clicked.connect(self.getfile)
         self.open_button.setGeometry(QtCore.QRect(9, 9, 75, 23))
         
-        self.Results_label=QtGui.QLineEdit(self)
+        self.Results_label=QtWidgets.QLineEdit(self)
         self.Results_label.setGeometry(QtCore.QRect(670, 270, 320, 20))
         self.Results_label.setFrame(False)
         self.Results_label.setEnabled(False)
         self.Results_label.setText("Results:")
         self.Results_label.setFont(font)
         
-        self.time_label=QtGui.QLineEdit(self)
+        self.time_label=QtWidgets.QLineEdit(self)
         self.time_label.setGeometry(QtCore.QRect(670, 500, 320, 20))
         self.time_label.setFrame(False)
         self.time_label.setEnabled(False)
         self.time_label.setText("Time (s):")
  
-        self.LableTime = QtGui.QLineEdit(self)
+        self.LableTime = QtWidgets.QLineEdit(self)
         self.LableTime.setEnabled(False)
         self.LableTime.setGeometry(QtCore.QRect(90, 10, 641, 20))
         self.LableTime.setFrame(False)
        
-        self.entries_label=QtGui.QLineEdit(self)
+        self.entries_label=QtWidgets.QLineEdit(self)
         self.entries_label.setGeometry(QtCore.QRect(670, 500, 320, 20))
         self.entries_label.setFrame(False)
         self.entries_label.setEnabled(False)
         self.entries_label.setText("# entries:")
  
-        self.LableEntries = QtGui.QLineEdit(self)
+        self.LableEntries = QtWidgets.QLineEdit(self)
         self.LableEntries.setEnabled(False)
         self.LableEntries.setGeometry(QtCore.QRect(90, 10, 641, 20))
         self.LableEntries.setFrame(False)
         
-        self.play_button = QtGui.QPushButton(self)
+        self.play_button = QtWidgets.QPushButton(self)
         self.play_button.setText("Analyze")
         self.play_button.clicked.connect(self.AnalyzeBtn)
         self.play_button.setGeometry(QtCore.QRect(760, 450, 80, 30))
         self.play_button.setEnabled(False)
         
-        self.roi_button = QtGui.QPushButton(self)
+        self.roi_button = QtWidgets.QPushButton(self)
         self.roi_button.setText("Save Roi")
         self.roi_button.clicked.connect(self.roi_box)
         self.roi_button.setGeometry(QtCore.QRect(670, 450, 80, 30))
                     
        
-        self.proBar_label=QtGui.QLineEdit(self)
+        self.proBar_label=QtWidgets.QLineEdit(self)
         self.proBar_label.setGeometry(QtCore.QRect(670, 500, 320, 20))
         self.proBar_label.setFrame(False)
         self.proBar_label.setEnabled(False)
         self.proBar_label.setText("Progress:")
-        self.proBar=QtGui.QProgressBar(self)
+        self.proBar=QtWidgets.QProgressBar(self)
         self.proBar.setGeometry(QtCore.QRect(670, 520, 280, 20))
                
-        self.sl_brigth = QtGui.QSlider(self)
+        self.sl_brigth = QtWidgets.QSlider(self)
         self.sl_brigth.setOrientation(QtCore.Qt.Horizontal)
         self.sl_brigth.setMinimum(0)
         self.sl_brigth.setMaximum(50)
         self.sl_brigth.setValue(10)
-        self.sl_brigth.setTickPosition(QtGui.QSlider.TicksBelow)
+        self.sl_brigth.setTickPosition(QtWidgets.QSlider.TicksBelow)
         self.sl_brigth.setTickInterval(10)
         self.sl_brigth.valueChanged.connect(self.selectionchange)
         self.sl_brigth.setGeometry(QtCore.QRect(750, 370, 180, 20))
         
          
-        self.bright_label = QtGui.QLineEdit(self)
+        self.bright_label = QtWidgets.QLineEdit(self)
         self.bright_label.setEnabled(False)
         self.bright_label.setGeometry(QtCore.QRect(670, 370, 80, 20))
         self.bright_label.setFrame(False)
         self.bright_label.setText("Set brightness:")
         
-        self.sensitivity_label = QtGui.QLineEdit(self)
+        self.sensitivity_label = QtWidgets.QLineEdit(self)
         self.sensitivity_label.setEnabled(False)
         self.sensitivity_label.setGeometry(QtCore.QRect(670, 230, 80, 20))
         self.sensitivity_label.setFrame(False)
         self.sensitivity_label.setText("Threshold (0-1):")
         
-        self.sensitivity = QtGui.QLineEdit(self)
+        self.sensitivity = QtWidgets.QLineEdit(self)
         self.sensitivity.setEnabled(True)
         self.sensitivity.setText("0.25")
         self.sensitivity.setGeometry(QtCore.QRect(760, 230, 40, 20))
@@ -197,7 +197,7 @@ class ControlWindow(QtGui.QWidget):
         if self.cap:
             self.endCapture()
             
-        filename = QtGui.QFileDialog.getOpenFileName(self, 'Open file', 
+        filename = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', 
                         'c:\\',"Video files (*.mp4)")[0]
         if os.path.exists(filename):
             self.filename = os.path.abspath(filename)
@@ -250,8 +250,8 @@ class ControlWindow(QtGui.QWidget):
         self.initialGrayValue=float(np.mean(t.ravel()))
         self.LableRaw.setText(str(round(self.initialGrayValue,3)))
         
-        img = QtGui.QImage(frame, frame.shape[1], frame.shape[0],QtGui.QImage.Format_RGB888)
-        pix = QtGui.QPixmap.fromImage(img)
+        img = QtWidgets.QImage(frame, frame.shape[1], frame.shape[0],QtWidgets.QImage.Format_RGB888)
+        pix = QtWidgets.QPixmap.fromImage(img)
         self.videoFrame.video_frame.setPixmap(pix)
         
         #cv2.imshow('t',t)
@@ -316,8 +316,8 @@ class ControlWindow(QtGui.QWidget):
             self.LableEntries.setText(str(self.nentries))
             
             self.valueNframe.append(nframe+10)
-            img = QtGui.QImage(frame, frame.shape[1], frame.shape[0],QtGui.QImage.Format_RGB888)
-            pix = QtGui.QPixmap.fromImage(img)
+            img = QtWidgets.QImage(frame, frame.shape[1], frame.shape[0],QtWidgets.QImage.Format_RGB888)
+            pix = QtWidgets.QPixmap.fromImage(img)
             self.videoFrame.video_frame.setPixmap(pix)
             
             if nframe<(self.frame_end-10):
@@ -381,47 +381,47 @@ class ControlWindow(QtGui.QWidget):
                 
 class videoWindow:
         def __init__(self, w, h, window):
-            self.window2=QtGui.QWidget()
+            self.window2=QtWidgets.QWidget()
             self.window2.resize(w, h)
             
-            layout = QtGui.QGridLayout()
+            layout = QtWidgets.QGridLayout()
             self.window2.setLayout(layout)
             
-            self.sl_frame = QtGui.QSlider()
+            self.sl_frame = QtWidgets.QSlider()
             self.sl_frame.setOrientation(QtCore.Qt.Horizontal)
             self.sl_frame.setMinimum(1)
             self.sl_frame.setMaximum(255)
             self.sl_frame.setValue(1)
-            self.sl_frame.setTickPosition(QtGui.QSlider.TicksBelow)
+            self.sl_frame.setTickPosition(QtWidgets.QSlider.TicksBelow)
             self.sl_frame.setTickInterval(1000)
             self.sl_frame.setGeometry(QtCore.QRect(9, 530, 640, 20))
             self.sl_frame.valueChanged.connect(window.SlideFrame)
             self.sl_frame.setEnabled(False)
             
-            self.End_button = QtGui.QPushButton()
+            self.End_button = QtWidgets.QPushButton()
             self.End_button.setText("End")
             self.End_button.clicked.connect(window.setEnd)
             self.End_button.setGeometry(QtCore.QRect(600, 530, 50, 23))
             
-            self.Lableframe = QtGui.QLineEdit()
+            self.Lableframe = QtWidgets.QLineEdit()
             self.Lableframe.setEnabled(False)
             self.Lableframe.setGeometry(QtCore.QRect(419, 530, 170, 20))
             self.Lableframe.setFrame(False)
             
-            self.LableInOut = QtGui.QLineEdit()
+            self.LableInOut = QtWidgets.QLineEdit()
             self.LableInOut.setEnabled(False)
             self.LableInOut.setGeometry(QtCore.QRect(419, 530, 170, 20))
             self.LableInOut.setFrame(False)
             self.LableInOut.setStyleSheet("background-color: red");
             
-            self.video_frame=QtGui.QLabel()
+            self.video_frame=QtWidgets.QLabel()
             self.video_frame.setGeometry(QtCore.QRect(10, 40, 640, 480))
-            self.video_frame.setFrameShape(QtGui.QFrame.Box)
+            self.video_frame.setFrameShape(QtWidgets.QFrame.Box)
             
             self.pg1 = pg.GraphicsView()
             self.pg1.setStyleSheet("background: transparent")
             self.pg1.setGeometry(QtCore.QRect(10, 40, 640, 480))
-            self.pg1.setFrameShape(QtGui.QFrame.Box)
+            self.pg1.setFrameShape(QtWidgets.QFrame.Box)
             self.pg1.setBackground(None)      
             self.roi=pg.PolyLineROI([[25, 25], [25, 450], [600, 450], [600, 25]], pen=(6,9), closed=True)        
             self.pg1.addItem(self.roi)
@@ -436,7 +436,7 @@ class videoWindow:
             self.window2.show()
                 
 def main():
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     window = ControlWindow()
     sys.exit(app.exec_())
         
