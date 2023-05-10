@@ -1,6 +1,6 @@
 import sys
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtWidgets
+from pyqtgraph.Qt import QtCore, QtWidgets, QtGui
 import numpy as np
 import cv2
 import math
@@ -244,7 +244,7 @@ class ControlWindow(QtWidgets.QWidget):
         
         
     def nextFrameSlot(self):
-        nframe = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+        nframe = int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
 
         if nframe >= self.length - 1:
             self.stop()
@@ -253,11 +253,12 @@ class ControlWindow(QtWidgets.QWidget):
         ret, frame = self.cap.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = cv2.resize(frame,None,fx=self.magnification, fy=self.magnification, interpolation = cv2.INTER_NEAREST)
-        img = QtWidgets.QImage(frame, frame.shape[1], frame.shape[0], QtWidgets.QImage.Format_RGB888)
-        pix = QtWidgets.QPixmap.fromImage(img)
+        img = QtGui.QImage(frame, frame.shape[1], frame.shape[0], QtGui.QImage.Format_RGB888)
+        pix = QtGui.QPixmap.fromImage(img)
         self.videoFrame.video_frame.setPixmap(pix)
         self.videoFrame.video_screen.resize(frame.shape[1], frame.shape[0])
         self.videoFrame.video_screen.setGeometry(QtCore.QRect(10, 40, frame.shape[1], frame.shape[0]))
+        #print("frame: "+str(nframe))
         self.Table.selectRow(nframe)
   
         
@@ -284,7 +285,7 @@ class ControlWindow(QtWidgets.QWidget):
 
     def start(self):
         self.play_button.setText("Stop")
-        self.timer.start(1000. / self.fps2)
+        self.timer.start(int(1000/ self.fps2))
     
     def openright(self):
         popMenu = QtWidgets.QMenu()
@@ -353,7 +354,7 @@ class ControlWindow(QtWidgets.QWidget):
         self.TableSumary.setVerticalHeaderLabels(["Rat "+self.LableRat1.text(),"Rat "+self.LableRat2.text(),"Rat "+self.LableRat3.text()])
     
     def menuAction(self, value):
-        currentFrame=self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+        currentFrame=int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
         
         if self.x<=self.line1_x: j=2
         if self.x<=self.line2_x and self.x>=self.line1_x: j=3
@@ -504,7 +505,6 @@ class videoWindow(QtWidgets.QWidget):
             self.sl_frame.setTickPosition(QtWidgets.QSlider.TicksBelow)
             self.sl_frame.setTickInterval(1000)
             self.sl_frame.setGeometry(QtCore.QRect(9, 530, 640, 20))
-            self.sl_frame.valueChanged.connect(self.window.nextFrameSlot)
             self.sl_frame.setEnabled(False)
                         
             layout.addWidget(self.video_frame, 0,0)
@@ -513,16 +513,16 @@ class videoWindow(QtWidgets.QWidget):
             self.show()
             
         def PaintVerticalLine(self, event):
-            painter = QtWidgets.QPainter(self.video_screen)
-            pen = QtWidgets.QPen()
-            pen.setColor(QtWidgets.QColor(0,255,0))
+            painter = QtGui.QPainter(self.video_screen)
+            pen = QtGui.QPen()
+            pen.setColor(QtGui.QColor(0,255,0))
             pen.setWidth(2)
             painter.setPen(pen)
             painter.drawLine(self.window.line1_x, 0, self.window.line1_x, self.video_screen.height())
             painter.drawLine(self.window.line2_x, 0, self.window.line2_x, self.video_screen.height())
-            painter.drawText(self.window.line1_x/2-5, 15, "Rat L")
-            painter.drawText((self.window.line2_x + self.window.line1_x)/2-5, 15, "Rat M")
-            painter.drawText((self.video_screen.width() + self.window.line2_x)/2-5, 15, "Rat R")
+            painter.drawText(int(self.window.line1_x/2-5), 15, "Rat L")
+            painter.drawText(int((self.window.line2_x + self.window.line1_x)/2-5), 15, "Rat M")
+            painter.drawText(int((self.video_screen.width() + self.window.line2_x)/2-5), 15, "Rat R")
             
         def openright(self):
             popMenu = QtWidgets.QMenu()
@@ -540,7 +540,7 @@ class videoWindow(QtWidgets.QWidget):
             popMenu.addAction(QtWidgets.QAction("Set Line 2", self,  enabled=True,triggered= self.window.setLine2))
             popMenu.addAction(QtWidgets.QAction("----------", self,  enabled=False)) 
             popMenu.addAction(QtWidgets.QAction("Erese", self,  enabled=True, triggered= self.window.Erese))
-            popMenu.exec_(QtWidgets.QCursor.pos())
+            popMenu.exec_(QtGui.QCursor.pos())
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
